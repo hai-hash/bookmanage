@@ -1,0 +1,44 @@
+{
+  "name": "BookLending",
+  "fields": [
+    {
+      "fieldName": "creationDate",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "LendingStatus",
+      "fieldValues": "PENDING,DONE"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "bookLending",
+      "relationshipName": "user",
+      "otherEntityField": "login"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "bookLendingDetails",
+      "otherEntityRelationshipName": "bookLending",
+      "relationshipName": "bookLendingDetails"
+    }
+  ],
+  "entityTableName": "book_len",
+  "dto": "no",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210719022734"
+}

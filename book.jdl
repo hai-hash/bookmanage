@@ -1,0 +1,149 @@
+NAME_MAX_LENGTH = 255
+CODE_MAX_LENGTH = 50
+PHONE_MAX_LENGTH = 20
+NOTE_MAX_LENGTH = 4000
+
+enum BookFormat {
+  HARDCOVER,
+  PAPERBACK,
+  AUDIO_BOOK,
+  EBOOK,
+  NEWSPAPER,
+  MAGAZINE,
+  JOURNAL
+}
+
+enum BookStatus {
+  AVAILABLE,
+  RESERVED,
+  LOANED,
+  LOST
+}
+
+enum AccountStatus{
+  ACTIVE,
+  CLOSED,
+  CANCELED,
+  BLACKLISTED,
+  NONE
+}
+
+enum ReservationStatus{
+  WAITING,  
+  CANCELED,
+  DONE
+}
+
+enum LendingStatus{  
+  PENDING,  
+  DONE
+}
+
+entity Book{
+	isbn String required,
+  	title String required maxlength(NAME_MAX_LENGTH),
+  	subject String required maxlength(NOTE_MAX_LENGTH),  	
+    target String maxlength(NOTE_MAX_LENGTH),  
+  	language String required,
+  	numberOfPages Integer required,
+    imageUrl String,
+    modifiedDate LocalDate required
+}
+
+entity BookItem { 	
+	barcode String,
+    isReferenceOnly Boolean,
+  	borrowed LocalDate,
+  	dueDate LocalDate,
+  	price BigDecimal,
+	format BookFormat required,
+  	status BookStatus,
+  	dateOfPurchase LocalDate,
+  	publicationDate LocalDate required,
+    modifiedDate LocalDate required
+}
+
+entity Reader {
+	phone String,
+	streetAddress String,
+  	city String,
+  	state String,
+  	zipCode String,
+  	country String required,
+    status AccountStatus,
+    modifiedDate LocalDate required
+}
+
+entity Rack {
+	number Integer, 
+    locationIdentifier String,
+    modifiedDate LocalDate required
+    isActive Boolean required
+} 
+
+entity Author {		
+    name String required,
+    description String maxlength(NOTE_MAX_LENGTH),
+    modifiedDate LocalDate required,
+    isActive Boolean required
+}
+
+entity Catagory {
+	name String required,
+    modifiedDate LocalDate required,
+    isActive Boolean required
+}
+
+entity Publisher {
+	name String required,
+    modifiedDate LocalDate required,
+    isActive Boolean required
+}
+
+entity BookReservation(book_res) {
+  creationDate LocalDate,
+  status ReservationStatus
+}
+
+entity BookLending(book_len){
+	creationDate LocalDate required,
+    status LendingStatus,
+    description String
+}
+
+entity BookLendingDetails(book_len_dtl){
+	dueDate LocalDate required,
+  	returnDate LocalDate,
+    price BigDecimal
+}
+
+relationship ManyToOne{
+	Book{user(login)} to User,        
+	BookItem{user(login)} to User,    
+    BookLending{user(login)} to User,
+    Catagory{user(login)} to User,
+    Publisher{user(login)} to User,    
+    Rack{user(login)} to User,
+    Author{user(login)} to User,
+    Reader{user(login)} to User,
+    BookItem to Rack,
+    BookItem to Book,     
+    Book to Catagory,        
+    Book to Publisher,    
+    BookReservation to Reader,        
+    BookLendingDetails to BookLending,
+    Catagory{catalog} to Catagory
+}
+
+relationship OneToOne{	
+    BookLendingDetails to BookReservation,
+    BookReservation to BookItem
+}
+
+relationship ManyToMany{
+	Book to Author
+}
+
+paginate * with pagination
+service * with serviceClass
+filter * 

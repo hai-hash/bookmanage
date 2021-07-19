@@ -1,0 +1,46 @@
+{
+  "name": "BookReservation",
+  "fields": [
+    {
+      "fieldName": "creationDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "ReservationStatus",
+      "fieldValues": "WAITING,CANCELED,DONE"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "bookItem",
+      "otherEntityRelationshipName": "bookReservation",
+      "relationshipName": "bookItem",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "reader",
+      "otherEntityRelationshipName": "bookReservation",
+      "relationshipName": "reader"
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "bookLendingDetails",
+      "otherEntityRelationshipName": "bookReservation",
+      "relationshipName": "bookLendingDetails",
+      "ownerSide": false
+    }
+  ],
+  "entityTableName": "book_res",
+  "dto": "no",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210719022733"
+}

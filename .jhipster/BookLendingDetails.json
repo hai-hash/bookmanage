@@ -1,0 +1,43 @@
+{
+  "name": "BookLendingDetails",
+  "fields": [
+    {
+      "fieldName": "dueDate",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "returnDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "price",
+      "fieldType": "BigDecimal"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "bookReservation",
+      "otherEntityRelationshipName": "bookLendingDetails",
+      "relationshipName": "bookReservation",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "bookLending",
+      "otherEntityRelationshipName": "bookLendingDetails",
+      "relationshipName": "bookLending"
+    }
+  ],
+  "entityTableName": "book_len_dtl",
+  "dto": "no",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210719022735"
+}

@@ -1,0 +1,88 @@
+{
+  "name": "BookItem",
+  "fields": [
+    {
+      "fieldName": "barcode",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "isReferenceOnly",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "borrowed",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "dueDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "price",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "format",
+      "fieldType": "BookFormat",
+      "fieldValues": "HARDCOVER,PAPERBACK,AUDIO_BOOK,EBOOK,NEWSPAPER,MAGAZINE,JOURNAL",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "BookStatus",
+      "fieldValues": "AVAILABLE,RESERVED,LOANED,LOST"
+    },
+    {
+      "fieldName": "dateOfPurchase",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "publicationDate",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "modifiedDate",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "bookItem",
+      "relationshipName": "user",
+      "otherEntityField": "login"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "rack",
+      "otherEntityRelationshipName": "bookItem",
+      "relationshipName": "rack"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "book",
+      "otherEntityRelationshipName": "bookItem",
+      "relationshipName": "book"
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "bookReservation",
+      "otherEntityRelationshipName": "bookItem",
+      "relationshipName": "bookReservation",
+      "ownerSide": false
+    }
+  ],
+  "entityTableName": "book_item",
+  "dto": "no",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210719022727"
+}
