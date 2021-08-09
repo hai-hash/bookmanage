@@ -157,6 +157,15 @@ public class ReaderResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
+    
+    @GetMapping("/readers/UserCurrentUser")
+    public ResponseEntity<List<Reader>> getAllReaderById(@PathVariable(value = "id", required = false) final Long id){
+    	log.debug("REST request to get Readers by Id ",id);
+    	List<Reader> readers = readerRepository.findByUserIsCurrentUser();
+    	
+    	return ResponseEntity.ok().body(readers);
+    	
+    }
 
     /**
      * {@code GET  /readers/count} : count all the readers.

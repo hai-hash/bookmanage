@@ -69,6 +69,7 @@ public class BookReservationResource {
         if (bookReservation.getId() != null) {
             throw new BadRequestAlertException("A new bookReservation cannot already have an ID", ENTITY_NAME, "idexists");
         }
+       
         BookReservation result = bookReservationService.save(bookReservation);
         return ResponseEntity
             .created(new URI("/api/book-reservations/" + result.getId()))
@@ -156,6 +157,10 @@ public class BookReservationResource {
     @GetMapping("/book-reservations")
     public ResponseEntity<List<BookReservation>> getAllBookReservations(BookReservationCriteria criteria, Pageable pageable) {
         log.debug("REST request to get BookReservations by criteria: {}", criteria);
+        if(criteria != null) {
+        	System.out.print("dell có");
+        }
+        System.out.print(criteria);
         Page<BookReservation> page = bookReservationQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());

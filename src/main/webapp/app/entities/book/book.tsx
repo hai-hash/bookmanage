@@ -124,6 +124,7 @@ export const Book = (props: IBookProps) => {
                 <th>
                   Publisher <FontAwesomeIcon icon="sort" />
                 </th>
+                
                 <th />
               </tr>
             </thead>

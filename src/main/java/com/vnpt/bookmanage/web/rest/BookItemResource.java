@@ -1,13 +1,16 @@
 package com.vnpt.bookmanage.web.rest;
 
+import com.vnpt.bookmanage.domain.Book;
 import com.vnpt.bookmanage.domain.BookItem;
 import com.vnpt.bookmanage.repository.BookItemRepository;
+import com.vnpt.bookmanage.repository.BookRepository;
 import com.vnpt.bookmanage.service.BookItemQueryService;
 import com.vnpt.bookmanage.service.BookItemService;
 import com.vnpt.bookmanage.service.criteria.BookItemCriteria;
 import com.vnpt.bookmanage.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -45,16 +48,20 @@ public class BookItemResource {
     private final BookItemService bookItemService;
 
     private final BookItemRepository bookItemRepository;
+    
+    private final BookRepository bookRepository;
 
     private final BookItemQueryService bookItemQueryService;
 
     public BookItemResource(
         BookItemService bookItemService,
         BookItemRepository bookItemRepository,
+        BookRepository bookRepository,
         BookItemQueryService bookItemQueryService
     ) {
         this.bookItemService = bookItemService;
         this.bookItemRepository = bookItemRepository;
+        this.bookRepository = bookRepository;
         this.bookItemQueryService = bookItemQueryService;
     }
 
@@ -146,6 +153,14 @@ public class BookItemResource {
             result,
             HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, bookItem.getId().toString())
         );
+    }
+    
+    @GetMapping("/book-items/book/{id}")
+    public ResponseEntity<List<BookItem>> getAllBookItemsByBook(@PathVariable(value = "id", required = false) final Long id){
+    	log.debug("REST request get all book item by id of book",id);
+    	Optional<Book> book = bookRepository.findById(id);
+    	List<BookItem> books = bookItemRepository.findByBook(book.get());
+    	return ResponseEntity.ok().body(books);
     }
 
     /**
