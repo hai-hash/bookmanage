@@ -32,9 +32,9 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://localhost:3306/BookManage?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
-    username: root
-    password: 123456
+    url: jdbc:postgresql://ec2-54-173-138-144.compute-1.amazonaws.com:5432/dcaf8gaq57vhbg
+    username: hiqvtxhqbkawru
+    password: 08215cd336ad0bf29f1d4f6963a2a13b8f29bbf8aab9139e300b11861fb64482
     hikari:
       poolName: Hikari
       auto-commit: false
